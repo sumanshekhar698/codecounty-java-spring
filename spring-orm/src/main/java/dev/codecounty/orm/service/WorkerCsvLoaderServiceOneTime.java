@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 @Service
-public class WorkerCsvLoaderService {
+public class WorkerCsvLoaderServiceOneTime {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -25,7 +25,8 @@ public class WorkerCsvLoaderService {
 		Map<String, Worker> workerMap = new HashMap<>();
 
 		try (CSVReader reader = new CSVReader(new InputStreamReader(
-				Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("data/workers.csv"))))) {
+				Objects.requireNonNull(getClass().getClassLoader().
+						getResourceAsStream("data/workers.csv"))))) {
 
 			String[] line;
 			reader.readNext(); // Skip header

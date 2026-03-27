@@ -1,5 +1,6 @@
 package dev.codecounty.orm.entities;
 
+import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import jakarta.persistence.Cacheable;
@@ -15,7 +16,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tasks")
 @Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Task {
 
 	@Id
@@ -25,7 +26,7 @@ public class Task {
 	private String taskName;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "worker_id")
 	private Worker worker;
 
@@ -52,6 +53,13 @@ public class Task {
 	public void setWorker(Worker worker) {
 		this.worker = worker;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "Task{" +
+				"id=" + id +
+				", taskName='" + taskName + '\'' +
+//				", worker=" + worker +
+				'}';
+	}
 }

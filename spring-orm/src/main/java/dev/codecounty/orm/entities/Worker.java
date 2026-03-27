@@ -43,6 +43,15 @@ public class Worker {
 		return name;
 	}
 
+	@Override
+	public String toString() {
+		return "Worker{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+//				", tasks=" + tasks +
+				'}';
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}

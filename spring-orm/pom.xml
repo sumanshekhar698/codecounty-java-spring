@@ -82,24 +82,32 @@
             <version>${opencsv.version}</version>
         </dependency>
 
+<!--        Hibernate doesn't know how to talk to Caffeine directly. It only knows how to talk to the JCache
+            (JSR-107) standard. This library is the "adapter."-->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-jcache</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
 
+<!--        This provides the Java interfaces (like CacheManager).
+            It’s the "contract" that says "this is what a cache should look like."-->
         <dependency>
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
             <version>${javax.cache.version}</version>
         </dependency>
 
+<!--        This is the actual logic that stores data in memory, handles expiration,
+            and evicts old data. It’s the "brain" of the operation.-->
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
             <version>${caffeine.version}</version>
         </dependency>
 
+<!--        This tells the cache-api that Caffeine is the specific tool fulfilling the JCache contract.
+            It’s the "glue" that makes Caffeine work as a JSR-107 provider.-->
         <dependency>
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>jcache</artifactId>
