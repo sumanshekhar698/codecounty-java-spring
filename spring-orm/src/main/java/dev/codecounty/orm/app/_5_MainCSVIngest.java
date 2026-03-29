@@ -13,11 +13,11 @@ public class _5_MainCSVIngest {
         ApplicationContext ctx =
                 new ClassPathXmlApplicationContext("beans_config/L2_cache_config.xml");
 
-        WorkerCsvLoaderServiceOneTime csvLoaderService = ctx.getBean(WorkerCsvLoaderServiceOneTime.class);
-        csvLoaderService.loadDataFromCsv();
+//        WorkerCsvLoaderServiceOneTime csvLoaderService = ctx.getBean(WorkerCsvLoaderServiceOneTime.class);
+//        csvLoaderService.loadDataFromCsv();
 
-//        WorkerCsvLoaderServiceSafe csvLoaderSafeService = ctx.getBean(WorkerCsvLoaderServiceSafe.class);
-//        csvLoaderSafeService.loadDataFromCsv();
+        WorkerCsvLoaderServiceSafe csvLoaderSafeService = ctx.getBean(WorkerCsvLoaderServiceSafe.class);
+        csvLoaderSafeService.loadDataFromCsvIdempotentBulkBatch();
 
 
 

@@ -166,7 +166,7 @@ public class WorkerCsvLoaderServiceSafe {
 
 
     @Transactional
-    public void loadDataFromCsvIdempotentBatch() {
+    public void loadDataFromCsvIdempotentBulkBatch() {
         int batchSize = 50; // Standard Hibernate batch size
         int count = 0;
 

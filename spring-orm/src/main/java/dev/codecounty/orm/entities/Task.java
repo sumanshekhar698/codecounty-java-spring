@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tasks")
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Task {
 
 	@Id

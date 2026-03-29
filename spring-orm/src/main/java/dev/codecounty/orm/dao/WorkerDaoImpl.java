@@ -35,29 +35,41 @@ public class WorkerDaoImpl implements WorkerDao {
     }
 
 
+
+    /*
+     *  Hibernate only throws an exception for READ_ONLY if it attempts a direct Update statement on an entity row that is
+     *  already known to the session.
+     *  Since your code involves a Collection and an Insert of a new Task, Hibernate uses the "Evict and Reload" strategy
+     *  instead of throwing a hard error.
+     *
+     * */
     @Transactional
-    public void addTaskToWorkerOLD(int workerId, Task newTask) {
+    @Override
+    public void addNewTaskToWorker(int workerId, Task newTask) {
         Worker worker = sessionFactory.getCurrentSession().get(Worker.class, workerId);
 
-        // This modifies a collection marked as READ_ONLY
-        worker.getTasks().add(newTask);
+        // Explicitly link them
         newTask.setWorker(worker);
+        worker.getTasks().add(newTask);
 
-        // CRASH: Hibernate cannot update the 'collection cache' for this worker
+        // While Cascade handles it, calling persisting makes your intent clear
+        // to other developers reading the code.
+        sessionFactory.getCurrentSession().persist(newTask);
     }
 
     @Transactional
     @Override
-    public void addTaskToWorker(int workerId, Task newTask) {
+    public void updateWorkerName(int workerId, String newName) {
         // 1. Fetch worker (puts them in L2 cache)
-        Worker worker = sessionFactory.getCurrentSession().get(Worker.class, workerId);
+        Worker worker = sessionFactory.getCurrentSession().
+                get(Worker.class, workerId);
 
-        // 2. TRIGGER THE ERROR: Modify an existing field
-        worker.setName("Ryan");//ERROR causing code
+        // 2. TRIGGER THE ERROR: Modify an existing field that is being cached by Hibernate
+        worker.setName(newName);//ERROR causing code
 
         // 3. Optional: add the task
-        newTask.setWorker(worker);
-        sessionFactory.getCurrentSession().persist(newTask);
+//        newTask.setWorker(worker);
+//        sessionFactory.getCurrentSession().persist(newTask);
 
         // Force Hibernate to sync with the DB and Cache right now
         sessionFactory.getCurrentSession().flush();

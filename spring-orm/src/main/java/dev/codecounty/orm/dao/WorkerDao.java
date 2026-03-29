@@ -14,5 +14,8 @@ public interface WorkerDao {
     List<Task> loadTasks(int id);
 
     @Transactional
-    void addTaskToWorker(int workerId, Task newTask);
+    void addNewTaskToWorker(int workerId, Task newTask);
+
+    @Transactional
+    void updateWorkerName(int workerId, String newName);
 }
